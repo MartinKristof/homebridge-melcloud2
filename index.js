@@ -277,6 +277,9 @@ class MelcloudPlatform {
 				case 1:
 					callback(undefined, Characteristic.CurrentHeatingCoolingState.HEAT);
 					return;
+				case 2:
+					callback(undefined, Characteristic.CurrentHeatingCoolingState.DEHUMIDITY);
+					return;
 				case 3:
 					callback(undefined, Characteristic.CurrentHeatingCoolingState.COOL);
 					return;
@@ -293,6 +296,9 @@ class MelcloudPlatform {
 				switch (r.OperationMode) {
 				case 1:
 					callback(undefined, Characteristic.TargetHeatingCoolingState.HEAT);
+					return;
+				case 2:
+					callback(undefined, Characteristic.CurrentHeatingCoolingState.DEHUMIDITY);
 					return;
 				case 3:
 					callback(undefined, Characteristic.TargetHeatingCoolingState.COOL);
@@ -354,6 +360,11 @@ class MelcloudPlatform {
 			case Characteristic.TargetHeatingCoolingState.COOL:
 				r.Power = true;
 				r.OperationMode = 3;
+				r.EffectiveFlags = 1 + 2;
+				break;
+			case Characteristic.TargetHeatingCoolingState.DEHUMIDITY:
+				r.Power = true;
+				r.OperationMode = 7;
 				r.EffectiveFlags = 1 + 2;
 				break;
 			case Characteristic.TargetHeatingCoolingState.AUTO:
